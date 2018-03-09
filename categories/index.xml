@@ -11,27 +11,9 @@
     
     
     <item>
-      <title>Development</title>
-      <link>https://mickeyding.github.io/categories/development/</link>
-      <pubDate>Wed, 23 Sep 2015 16:30:37 +0800</pubDate>
-      
-      <guid>https://mickeyding.github.io/categories/development/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Golang</title>
-      <link>https://mickeyding.github.io/categories/golang/</link>
-      <pubDate>Wed, 23 Sep 2015 16:30:37 +0800</pubDate>
-      
-      <guid>https://mickeyding.github.io/categories/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Machine Learning</title>
       <link>https://mickeyding.github.io/categories/machine-learning/</link>
-      <pubDate>Tue, 13 Feb 2018 16:30:37 +0800</pubDate>
+      <pubDate>Mon, 19 Feb 2018 16:30:37 +0800</pubDate>
       
       <guid>https://mickeyding.github.io/categories/machine-learning/</guid>
       <description></description>
