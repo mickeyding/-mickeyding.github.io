@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Chenjing Blog</title>
+    <link>https://mickeyding.github.io/post/</link>
+    <description>Recent content in Posts on Chenjing Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 13 Feb 2018 16:30:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://mickeyding.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>机器学习（一）贝叶斯判别式</title>
+      <link>https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%A4%E5%88%AB%E5%BC%8F/</link>
+      <pubDate>Tue, 13 Feb 2018 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%A4%E5%88%AB%E5%BC%8F/</guid>
+      <description>符号 含义     $C_k$ 第k类   p 概率密度   $P(C_k)$ 第k类的概率。本文中的概率密度和概率在公式推导时已严格区分   x 输入数据；可为训练样本（已知类别）或者待分类数据（未知类别）,为变量   $q$ 输入数据，有固定取值，非变量   m 类型总数    一.三个基本概率 1.1先验概率 根据经验得到的概率。比如$P(C_k)$：第k类的先验概率
+1.2条件概率 $P（x|C_k）$: 在第k类中产生观察到的数据x的概率，表示了x是由第k类产生的可能性。
+1.3后验概率 $P（C_k|x）$:输入数据x是第k类的概率。
+1.4 三者关系 $$p(x,C_k) = p(x|C_k)*P(C_k) = P(C_k|x)p(x)$$
+其中x是连续随机变量，注意$P(x) = 0$；表达式中采用的是概率密度函数。 $C$是离散随机变量，表达式中采用的是概率。
+ 1.具体参考Christopher M. Bishop，Pattern Recognition and Machine Learning，Springer, 2006 1.2.1节。
+2.在第二节4.3生成模型和判别模型的比较中再来比较条件概率和后验概率。
+ 二.贝叶斯判别式最佳决策准测的推导 目标函数： 使错分输入数据x的概率最小。 $$图1 贝叶斯判别式最小化错分概率$$ 已知决策准测$x_0$, 当$x &amp;lt; x_0$，即$x \in R_1$，贝叶斯决策认为x属于$C_1$类，反之则为$C_2类。</description>
+    </item>
+    
+    <item>
+      <title>你好，Hugo</title>
+      <link>https://mickeyding.github.io/post/first/</link>
+      <pubDate>Wed, 23 Sep 2015 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/post/first/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

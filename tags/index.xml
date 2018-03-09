@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Chenjing Blog</title>
+    <link>https://mickeyding.github.io/tags/</link>
+    <description>Recent content in Tags on Chenjing Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 13 Feb 2018 16:30:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://mickeyding.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bayes Discriminant Function</title>
+      <link>https://mickeyding.github.io/tags/bayes-discriminant-function/</link>
+      <pubDate>Tue, 13 Feb 2018 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/tags/bayes-discriminant-function/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Development</title>
+      <link>https://mickeyding.github.io/tags/development/</link>
+      <pubDate>Wed, 23 Sep 2015 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/tags/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang</title>
+      <link>https://mickeyding.github.io/tags/golang/</link>
+      <pubDate>Wed, 23 Sep 2015 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Machine Learning</title>
+      <link>https://mickeyding.github.io/tags/machine-learning/</link>
+      <pubDate>Tue, 13 Feb 2018 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
