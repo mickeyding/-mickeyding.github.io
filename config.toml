@@ -1,0 +1,4 @@
+baseURL = 'http://mickeyding.github.io/'
+languageCode = 'en-us'
+title = 'ChenjingBlog'
+theme='eureka'
