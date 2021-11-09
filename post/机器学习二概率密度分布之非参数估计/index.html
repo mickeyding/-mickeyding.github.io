@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Chenjing Ding">
+<meta name="description" content="Describe your website">
+<meta name="generator" content="Hugo 0.37.1" />
+<title>机器学习（二）概率密度估计之非参数估计 </title>
+<link rel="shortcut icon" href="https://mickeyding.github.io/images/favicon.ico">
+<link rel="stylesheet" href="https://mickeyding.github.io/css/style.css">
+<link rel="stylesheet" href="https://mickeyding.github.io/css/highlight.css">
+
+
+
+<link rel="stylesheet" href="https://mickeyding.github.io/css/monosocialiconsfont.css">
+
+
+
+<link href="https://mickeyding.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Chenjing Blog" />
+
+
+<meta property="og:title" content="机器学习（二）概率密度估计之非参数估计 " />
+<meta property="og:description" content="二.非参数估计 2.1直方图估计 直方图估计概率密度函数基本思想： 将数据空间分成许多个子空间，每一个子空间大小为$△$，在每一个子空间内计算样本出现的个数$n_i$，样本总个数为N，则概率密度函数为：$$ p(x) = \frac{n_i}{N△}；$$
+平滑因子:  图4 不同平滑因子（上：平滑因子过小，估计的概率密度函数有很多毛刺，噪声； 中：平滑因子适合的时候，估计的概率密度函数； 下：平滑因子过大，估计的概率密度函数误差增大)  缺点: 当数据空间的维数为D，每一维划分的子空间个数为M，则所需子空间个数为$M^D$， 该个数呈指数级增长。有两种方法可以解决这个问题，它们都是针对每一个输入样本$\widehat{x}$，而并非对整个训练样本事先划分好子空间。 这两种方法有相同的思路：在一个很小的区域R内，$$P(x) = \int _R p(x)dx \approx p(x)V \Rightarrow p(x) = \frac{P(x)}{V} = \frac{K}{NV}$$K可以理解成V内训练样本的个数。如果固定V，则产生了核方法。如果固定K，则产生了K近邻估计的方法。
+2.2核方法 引入核函数: $$k(μ) \geqslant 0, V=\int k(μ) dμ = 1（积分也可不为1） \\ 则K(\widehat{x})=\sum_{i=1}^n k(x_i-\widehat{x}) \Rightarrow p(x) = \frac{1}{N} \sum_{i=1}^n k(x_i-\widehat{x}) $$ 上述表述没有直方图方法那么直观，举以下两个例子：
+&ndash; $k(μ)$如下定义：
+$$k(μ) = \lbrace_{0, else}^{1 \ ( |u_i|&lt;\frac{h}{2},i = 1,2 &hellip; D)} \\V =\int k(μ) dμ = h^D $$ 如果μ是二维，则该积分表示以$\widehat{x}$为中心，长宽为h，高为1的长方体体积 。 $$K(\widehat{x})=\sum_{i=1}^n k(x_i-\widehat{x}) = \sum_{i=1}^n 1 (|x_i-\widehat{x}| &lt; \frac{h}{2} ) \\ p(x) = \frac{K}{NV} = \frac{ \sum_{i=1}^n 1(|x_i-\widehat{x}| &lt; \frac{h}{2})}{N*h^D}$$ $K(\widehat{x})$表示的是与$\widehat{x} $距离小于$\frac{h}{2}$的样本点的个数,如下图所示：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%9D%9E%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/" />
+
+
+
+<meta property="article:published_time" content="2018-02-19T16:30:37&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-02-19T16:30:37&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="机器学习（二）概率密度估计之非参数估计 ">
+<meta itemprop="description" content="二.非参数估计 2.1直方图估计 直方图估计概率密度函数基本思想： 将数据空间分成许多个子空间，每一个子空间大小为$△$，在每一个子空间内计算样本出现的个数$n_i$，样本总个数为N，则概率密度函数为：$$ p(x) = \frac{n_i}{N△}；$$
+平滑因子:  图4 不同平滑因子（上：平滑因子过小，估计的概率密度函数有很多毛刺，噪声； 中：平滑因子适合的时候，估计的概率密度函数； 下：平滑因子过大，估计的概率密度函数误差增大)  缺点: 当数据空间的维数为D，每一维划分的子空间个数为M，则所需子空间个数为$M^D$， 该个数呈指数级增长。有两种方法可以解决这个问题，它们都是针对每一个输入样本$\widehat{x}$，而并非对整个训练样本事先划分好子空间。 这两种方法有相同的思路：在一个很小的区域R内，$$P(x) = \int _R p(x)dx \approx p(x)V \Rightarrow p(x) = \frac{P(x)}{V} = \frac{K}{NV}$$K可以理解成V内训练样本的个数。如果固定V，则产生了核方法。如果固定K，则产生了K近邻估计的方法。
+2.2核方法 引入核函数: $$k(μ) \geqslant 0, V=\int k(μ) dμ = 1（积分也可不为1） \\ 则K(\widehat{x})=\sum_{i=1}^n k(x_i-\widehat{x}) \Rightarrow p(x) = \frac{1}{N} \sum_{i=1}^n k(x_i-\widehat{x}) $$ 上述表述没有直方图方法那么直观，举以下两个例子：
+&ndash; $k(μ)$如下定义：
+$$k(μ) = \lbrace_{0, else}^{1 \ ( |u_i|&lt;\frac{h}{2},i = 1,2 &hellip; D)} \\V =\int k(μ) dμ = h^D $$ 如果μ是二维，则该积分表示以$\widehat{x}$为中心，长宽为h，高为1的长方体体积 。 $$K(\widehat{x})=\sum_{i=1}^n k(x_i-\widehat{x}) = \sum_{i=1}^n 1 (|x_i-\widehat{x}| &lt; \frac{h}{2} ) \\ p(x) = \frac{K}{NV} = \frac{ \sum_{i=1}^n 1(|x_i-\widehat{x}| &lt; \frac{h}{2})}{N*h^D}$$ $K(\widehat{x})$表示的是与$\widehat{x} $距离小于$\frac{h}{2}$的样本点的个数,如下图所示：">
+
+
+<meta itemprop="datePublished" content="2018-02-19T16:30:37&#43;08:00" />
+<meta itemprop="dateModified" content="2018-02-19T16:30:37&#43;08:00" />
+<meta itemprop="wordCount" content="191">
+
+
+
+<meta itemprop="keywords" content="Machine Learning, non-parametric estmation  ," />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="机器学习（二）概率密度估计之非参数估计 "/>
+<meta name="twitter:description" content="二.非参数估计 2.1直方图估计 直方图估计概率密度函数基本思想： 将数据空间分成许多个子空间，每一个子空间大小为$△$，在每一个子空间内计算样本出现的个数$n_i$，样本总个数为N，则概率密度函数为：$$ p(x) = \frac{n_i}{N△}；$$
+平滑因子:  图4 不同平滑因子（上：平滑因子过小，估计的概率密度函数有很多毛刺，噪声； 中：平滑因子适合的时候，估计的概率密度函数； 下：平滑因子过大，估计的概率密度函数误差增大)  缺点: 当数据空间的维数为D，每一维划分的子空间个数为M，则所需子空间个数为$M^D$， 该个数呈指数级增长。有两种方法可以解决这个问题，它们都是针对每一个输入样本$\widehat{x}$，而并非对整个训练样本事先划分好子空间。 这两种方法有相同的思路：在一个很小的区域R内，$$P(x) = \int _R p(x)dx \approx p(x)V \Rightarrow p(x) = \frac{P(x)}{V} = \frac{K}{NV}$$K可以理解成V内训练样本的个数。如果固定V，则产生了核方法。如果固定K，则产生了K近邻估计的方法。
+2.2核方法 引入核函数: $$k(μ) \geqslant 0, V=\int k(μ) dμ = 1（积分也可不为1） \\ 则K(\widehat{x})=\sum_{i=1}^n k(x_i-\widehat{x}) \Rightarrow p(x) = \frac{1}{N} \sum_{i=1}^n k(x_i-\widehat{x}) $$ 上述表述没有直方图方法那么直观，举以下两个例子：
+&ndash; $k(μ)$如下定义：
+$$k(μ) = \lbrace_{0, else}^{1 \ ( |u_i|&lt;\frac{h}{2},i = 1,2 &hellip; D)} \\V =\int k(μ) dμ = h^D $$ 如果μ是二维，则该积分表示以$\widehat{x}$为中心，长宽为h，高为1的长方体体积 。 $$K(\widehat{x})=\sum_{i=1}^n k(x_i-\widehat{x}) = \sum_{i=1}^n 1 (|x_i-\widehat{x}| &lt; \frac{h}{2} ) \\ p(x) = \frac{K}{NV} = \frac{ \sum_{i=1}^n 1(|x_i-\widehat{x}| &lt; \frac{h}{2})}{N*h^D}$$ $K(\widehat{x})$表示的是与$\widehat{x} $距离小于$\frac{h}{2}$的样本点的个数,如下图所示："/>
+<meta name="twitter:site" content="@https://www.twitter.com/"/>
+
+
+    </head>
+<body>
+    <nav class="main-nav">
+	
+		<a href='https://mickeyding.github.io/'> <span class="arrow">←</span>Home</a>
+	
+
+	
+ 		<a href='https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%A4%E5%88%AB%E5%BC%8F/'>机器学习（一）贝叶斯判别式</a>
+  	
+ 		<a href='https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%9D%9E%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/'>机器学习（二）概率密度估计之非参数估计 </a>
+  	
+ 		<a href='https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E5%92%8C%E6%89%80%E7%94%A8%E7%AC%A6%E5%8F%B7/'>机器学习（二）概率密度分布之预备知识和所用符号 </a>
+  	
+
+	
+		<a class="cta" href="https://mickeyding.github.io/index.xml">Subscribe</a>
+	
+</nav>
+
+    <section id="wrapper">
+        
+        
+<article class="post">
+    <header>
+        <h1>机器学习（二）概率密度估计之非参数估计 </h1>
+        <h2 class="subtitle"></h2>
+        <h2 class="headline">
+        February 19, 2018
+        <br>
+        
+        
+            
+                <a href="https://mickeyding.github.io/tags/machine-learning">Machine Learning</a>
+            
+                <a href="https://mickeyding.github.io/tags/non-parametric-estmation"> non-parametric estmation  </a>
+            
+        
+        
+        </h2>
+    </header>
+    <section id="post-body">
+        
+
+<hr />
+
+<h2 id="二-非参数估计"><strong>二.非参数估计</strong></h2>
+
+<h3 id="2-1直方图估计"><strong>2.1直方图估计</strong></h3>
+
+<h4 id="直方图估计概率密度函数基本思想">直方图估计概率密度函数基本思想：</h4>
+
+<p>将数据空间分成许多个子空间，每一个子空间大小为$△$，在每一个子空间内计算样本出现的个数$n_i$，样本总个数为N，则概率密度函数为：$$ p(x) = \frac{n_i}{N△}；$$</p>
+
+<h4 id="平滑因子">平滑因子:</h4>
+
+<div align=center> 
+<img src="http://img.blog.csdn.net/20180220224732988?" width = "400" height = "350"/>  
+</div>  
+<div align=center> 
+图4 不同平滑因子（上：平滑因子过小，估计的概率密度函数有很多毛刺，噪声； 中：平滑因子适合的时候，估计的概率密度函数； 下：平滑因子过大，估计的概率密度函数误差增大)
+</div>  
+  
+
+<h4 id="缺点">缺点:</h4>
+
+<p>当数据空间的维数为D，每一维划分的子空间个数为M，则所需子空间个数为$M^D$， 该个数呈指数级增长。有两种方法可以解决这个问题，它们都是针对每一个输入样本$\widehat{x}$，而并非对整个训练样本事先划分好子空间。
+这两种方法有相同的思路：在一个很小的区域R内，$$P(x) = \int _R p(x)dx \approx p(x)V \Rightarrow p(x) = \frac{P(x)}{V} = \frac{K}{NV}$$K可以理解成V内训练样本的个数。如果固定V，则产生了核方法。如果固定K，则产生了K近邻估计的方法。</p>
+
+<h3 id="2-2核方法"><strong>2.2核方法</strong></h3>
+
+<h4 id="引入核函数">引入核函数:</h4>
+
+<p>$$k(μ) \geqslant 0, V=\int k(μ) dμ = 1（积分也可不为1）
+\\ 则K(\widehat{x})=\sum_{i=1}^n k(x_i-\widehat{x}) \Rightarrow p(x) = \frac{1}{N} \sum_{i=1}^n k(x_i-\widehat{x}) $$
+上述表述没有直方图方法那么直观，举以下两个例子：</p>
+
+<p>&ndash; $k(μ)$如下定义：</p>
+
+<p>$$k(μ) = \lbrace_{0, else}^{1 \  ( |u_i|&lt;\frac{h}{2},i = 1,2 &hellip; D)}
+ \\V =\int k(μ) dμ = h^D $$
+ 如果μ是二维，则该积分表示以$\widehat{x}$为中心，长宽为h，高为1的长方体体积 。
+ $$K(\widehat{x})=\sum_{i=1}^n k(x_i-\widehat{x}) = \sum_{i=1}^n  1 (|x_i-\widehat{x}| &lt; \frac{h}{2} )
+ \\ p(x) = \frac{K}{NV} =  \frac{ \sum_{i=1}^n  1(|x_i-\widehat{x}| &lt; \frac{h}{2})}{N*h^D}$$
+ $K(\widehat{x})$表示的是与$\widehat{x} $距离小于$\frac{h}{2}$的样本点的个数,如下图所示：</p>
+
+<div align=center> 
+<img src="http://img.blog.csdn.net/20180220224754689?" width = "150" height = "100"  />
+</div>
+<div align=center>   
+图5 核方法中K的意义（红色点为$\widehat{x}$, 方框边长为h)
+</div>
+ 
+
+<p>但是该核函数估计的概率密度在边界处不连续，可以选择更加光滑的核函数比如高斯函数解决这个问题。</p>
+
+<p>&ndash; $k(μ)$为一维高斯函数
+ $$k(μ) =\frac{1}{\sqrt{2π}*h} exp{- \frac{(μ)^2}{2h^2}}
+ \\ V = \int k(μ) dμ = 1
+ \\ K(\widehat{x})=\sum_{i=1}^n k(x_i-\widehat{x}) $$ 该核函数的$K(\widehat{x})$表示与$\widehat{x}$ 距离小于$\frac{h}{2}$ 的样本点的加权个数，权值是高斯函数的值，第一个例子中的权值全为1。</p>
+
+<h4 id="平滑因子h">平滑因子h：</h4>
+
+<div align=center> 
+<img src="http://img.blog.csdn.net/20180220224811250?" width = "400" height = "350"  />  
+</div>
+<div align=center>  
+图6不同平滑因子（上：平滑因子过小，估计的概率密度函数有很多毛刺，噪声； 中：平滑因子适合的时候，估计的概率密度函数； 下：平滑因子过大，估计的概率密度函数误差增大)
+</div>  
+  
+
+<h3 id="2-3k近邻估计"><strong>2.3K近邻估计</strong></h3>
+
+<p>固定K，增大V至$V^<em>$， 使得$V^</em>$内含有K个训练样本。
+$$p(x) = \frac{K}{NV^*}$$</p>
+
+<h4 id="平滑因子k">平滑因子K：</h4>
+
+<div align=center> 
+<img src="http://img.blog.csdn.net/20180220224819515?" width = "400" height = "350"  />  
+</div>
+<div align=center> 
+图7不同平滑因子（上：平滑因子过小，估计的概率密度函数有很多毛刺，噪声； 中：平滑因子适合的时候，估计的概率密度函数； 下：平滑因子过大，估计的概率密度函数误差增大） 
+</div>
+
+<h4 id="缺点-1">缺点：</h4>
+
+<p>K近邻估计的概率密度函数并不是真正的概率密度函数。
+考虑$K=1, \exists x_i, x_i = \widehat{x} \Rightarrow V= 0  \Rightarrow p(x) = \infty$</p>
+
+<h4 id="k近邻用于分类">K近邻用于分类：</h4>
+
+<p>用K近邻方法推出后验概率：
+$$p(\widehat{x}) = \frac{K}{NV}
+\\ p(\widehat{x}|C_j) = \frac{K_j}{N_j V}
+\\ P(C_j|\widehat{x}) = \frac{ p(\widehat{x}|C_j)*P(C_j)}{p(\widehat{x})}= \frac{K_j}{N_j V} * \frac{N_j}{N}*\frac{NV}{K} = \frac{K_j}{K} $$
+如果$P(C_j|\widehat{x}) &gt; P(C_k|\widehat{x}) \forall j \neq k $，则将样本$\widehat{x}$分到 j 类。</p>
+
+<h4 id="2-4-核方法和k近邻估计的缺点"><strong>2.4 核方法和K近邻估计的缺点</strong></h4>
+
+<p>需要存储训练样本，对每一个输入样本$\widehat{x}$，都需要遍历整个训练样本。</p>
+
+<h2 id="三参数方法和非参数方法的比较"><strong>三参数方法和非参数方法的比较</strong></h2>
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>适用范围</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>参数法</td>
+<td>各样本独立同分布，只能预先假设样本的分布</td>
+</tr>
+
+<tr>
+<td>k近邻&amp;核函数法</td>
+<td>训练样本集数据比较少</td>
+</tr>
+
+<tr>
+<td>直方图</td>
+<td>训练样本的维数较低</td>
+</tr>
+</tbody>
+</table>
+
+<p>综上，以上这些简单的方法都不够灵活和有效，下节将介绍更加灵活的方法——高斯混合模型。</p>
+
+    </section>
+</article>
+
+<footer id="post-meta" class="clearfix">
+    <a href="https://twitter.com/Your%20Twitter%20account">
+    <img class="avatar" src="https://mickeyding.github.io/images/avatar.png">
+    <div>
+        <span class="dark">Chenjing Ding</span>
+        <span>I&#39;m an blogger.</span>
+    </div>
+    </a>
+    <section id="sharing">
+        <a class="twitter" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fmickeyding.github.io%2fpost%2f%25E6%259C%25BA%25E5%2599%25A8%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25BA%258C%25E6%25A6%2582%25E7%258E%2587%25E5%25AF%2586%25E5%25BA%25A6%25E5%2588%2586%25E5%25B8%2583%25E4%25B9%258B%25E9%259D%259E%25E5%258F%2582%25E6%2595%25B0%25E4%25BC%25B0%25E8%25AE%25A1%2f - %e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%ef%bc%88%e4%ba%8c%ef%bc%89%e6%a6%82%e7%8e%87%e5%af%86%e5%ba%a6%e4%bc%b0%e8%ae%a1%e4%b9%8b%e9%9d%9e%e5%8f%82%e6%95%b0%e4%bc%b0%e8%ae%a1%20 by @Your%20Twitter%20account"><span class="icon-twitter"> tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+    </section>
+</footer>
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "spf13" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<ul id="post-list" class="archive readmore">
+    <h3>Read more</h3>
+
+    
+    
+    
+        <li>
+            <a href="https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E5%92%8C%E6%89%80%E7%94%A8%E7%AC%A6%E5%8F%B7/">机器学习（二）概率密度分布之预备知识和所用符号 <aside class="dates">Feb 19 2018</aside></a>
+        </li>
+    
+        <li>
+            <a href="https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%A4%E5%88%AB%E5%BC%8F/">机器学习（一）贝叶斯判别式<aside class="dates">Feb 13 2018</aside></a>
+        </li>
+    
+</ul>
+
+
+
+        <footer>
+  <div>
+    <p>
+    &copy; 2017-18 Chenjing Ding.
+   
+    </p>
+  </div>
+  <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+ 
+</script>
+</footer>
+
+
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-XYSYXYSY-X']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script');
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
+        'http://www') + '.google-analytics.com/ga.js';
+    ga.setAttribute('async', 'true');
+    document.documentElement.firstChild.appendChild(ga);
+  })();
+
+</script>
+</body>
+</html>
+    </section>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://mickeyding.github.io/js/main.js"></script>
+<script src="https://mickeyding.github.io/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>

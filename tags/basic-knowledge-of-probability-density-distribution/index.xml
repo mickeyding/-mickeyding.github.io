@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Basic Knowledge of Probability Density Distribution on Chenjing Blog</title>
+    <link>https://mickeyding.github.io/tags/basic-knowledge-of-probability-density-distribution/</link>
+    <description>Recent content in Basic Knowledge of Probability Density Distribution on Chenjing Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 19 Feb 2018 16:30:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://mickeyding.github.io/tags/basic-knowledge-of-probability-density-distribution/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>机器学习（二）概率密度分布之预备知识和所用符号 </title>
+      <link>https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E5%92%8C%E6%89%80%E7%94%A8%E7%AC%A6%E5%8F%B7/</link>
+      <pubDate>Mon, 19 Feb 2018 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E5%92%8C%E6%89%80%E7%94%A8%E7%AC%A6%E5%8F%B7/</guid>
+      <description>机器学习（二）所用到的符号如下:
+   符号 含义     $L(\theta)$ θ的可能性，参考机器学习（一）条件概率   $E(\theta)$ $\theta$的对数可能性(Log-likelihood)   $\widehat{μ}$ μ的估计量   X 随机变量X   n 样本个数n   D 样本的维度   x 随机变量X的样本x   $x_i$ 样本x的i个样本点   $x_{trai}$ 训练样本   $x_{trai_i}$ 训练样本的第i个样本点   $\widehat{x}$ 输入样本    高斯分布预备知识总结（可以先跳过，必要时查找）
+1.一维高斯分布公式 $$N(x|μ，σ^2) = \frac{1}{\sqrt{2π}*σ} exp{- \frac{(x-μ)^2}{2σ^2}}$$
+2.多维高斯分布公式 $$ N(x|μ,Σ)=\frac{1}{(2π)^{\frac{D}{2}} |Σ|^{\frac{1}{2}}}exp{-\frac{1}{2}(x-μ)^T Σ^{-1}(x-μ) }$$
+3.多维高斯分布数据的相关性 由于Σ是实对称矩阵，可以将Σ分解成特征向量和的形式： $$Σ = \sum_{i=1}^D λ_i μ_i μ_i^T :$$ 矩阵的逆： $$Σ^{-1} = \sum_{i=1}^D \frac{1}{λ_i} μ_i μ_i^T$$ 以2维高斯分布为例：</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Chenjing Ding">
+<meta name="description" content="Describe your website">
+<meta name="generator" content="Hugo 0.37.1" />
+<title>机器学习（二）概率密度分布之预备知识和所用符号 </title>
+<link rel="shortcut icon" href="https://mickeyding.github.io/images/favicon.ico">
+<link rel="stylesheet" href="https://mickeyding.github.io/css/style.css">
+<link rel="stylesheet" href="https://mickeyding.github.io/css/highlight.css">
+
+
+
+<link rel="stylesheet" href="https://mickeyding.github.io/css/monosocialiconsfont.css">
+
+
+
+<link href="https://mickeyding.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Chenjing Blog" />
+
+
+<meta property="og:title" content="机器学习（二）概率密度分布之预备知识和所用符号 " />
+<meta property="og:description" content="机器学习（二）所用到的符号如下:
+   符号 含义     $L(\theta)$ θ的可能性，参考机器学习（一）条件概率   $E(\theta)$ $\theta$的对数可能性(Log-likelihood)   $\widehat{μ}$ μ的估计量   X 随机变量X   n 样本个数n   D 样本的维度   x 随机变量X的样本x   $x_i$ 样本x的i个样本点   $x_{trai}$ 训练样本   $x_{trai_i}$ 训练样本的第i个样本点   $\widehat{x}$ 输入样本    高斯分布预备知识总结（可以先跳过，必要时查找）
+1.一维高斯分布公式 $$N(x|μ，σ^2) = \frac{1}{\sqrt{2π}*σ} exp{- \frac{(x-μ)^2}{2σ^2}}$$
+2.多维高斯分布公式 $$ N(x|μ,Σ)=\frac{1}{(2π)^{\frac{D}{2}} |Σ|^{\frac{1}{2}}}exp{-\frac{1}{2}(x-μ)^T Σ^{-1}(x-μ) }$$
+3.多维高斯分布数据的相关性 由于Σ是实对称矩阵，可以将Σ分解成特征向量和的形式： $$Σ = \sum_{i=1}^D λ_i μ_i μ_i^T :$$ 矩阵的逆： $$Σ^{-1} = \sum_{i=1}^D \frac{1}{λ_i} μ_i μ_i^T$$ 以2维高斯分布为例：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E5%92%8C%E6%89%80%E7%94%A8%E7%AC%A6%E5%8F%B7/" />
+
+
+
+<meta property="article:published_time" content="2018-02-19T16:30:37&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-02-19T16:30:37&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="机器学习（二）概率密度分布之预备知识和所用符号 ">
+<meta itemprop="description" content="机器学习（二）所用到的符号如下:
+   符号 含义     $L(\theta)$ θ的可能性，参考机器学习（一）条件概率   $E(\theta)$ $\theta$的对数可能性(Log-likelihood)   $\widehat{μ}$ μ的估计量   X 随机变量X   n 样本个数n   D 样本的维度   x 随机变量X的样本x   $x_i$ 样本x的i个样本点   $x_{trai}$ 训练样本   $x_{trai_i}$ 训练样本的第i个样本点   $\widehat{x}$ 输入样本    高斯分布预备知识总结（可以先跳过，必要时查找）
+1.一维高斯分布公式 $$N(x|μ，σ^2) = \frac{1}{\sqrt{2π}*σ} exp{- \frac{(x-μ)^2}{2σ^2}}$$
+2.多维高斯分布公式 $$ N(x|μ,Σ)=\frac{1}{(2π)^{\frac{D}{2}} |Σ|^{\frac{1}{2}}}exp{-\frac{1}{2}(x-μ)^T Σ^{-1}(x-μ) }$$
+3.多维高斯分布数据的相关性 由于Σ是实对称矩阵，可以将Σ分解成特征向量和的形式： $$Σ = \sum_{i=1}^D λ_i μ_i μ_i^T :$$ 矩阵的逆： $$Σ^{-1} = \sum_{i=1}^D \frac{1}{λ_i} μ_i μ_i^T$$ 以2维高斯分布为例：">
+
+
+<meta itemprop="datePublished" content="2018-02-19T16:30:37&#43;08:00" />
+<meta itemprop="dateModified" content="2018-02-19T16:30:37&#43;08:00" />
+<meta itemprop="wordCount" content="95">
+
+
+
+<meta itemprop="keywords" content="Machine Learning,basic knowledge of probability density distribution," />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="机器学习（二）概率密度分布之预备知识和所用符号 "/>
+<meta name="twitter:description" content="机器学习（二）所用到的符号如下:
+   符号 含义     $L(\theta)$ θ的可能性，参考机器学习（一）条件概率   $E(\theta)$ $\theta$的对数可能性(Log-likelihood)   $\widehat{μ}$ μ的估计量   X 随机变量X   n 样本个数n   D 样本的维度   x 随机变量X的样本x   $x_i$ 样本x的i个样本点   $x_{trai}$ 训练样本   $x_{trai_i}$ 训练样本的第i个样本点   $\widehat{x}$ 输入样本    高斯分布预备知识总结（可以先跳过，必要时查找）
+1.一维高斯分布公式 $$N(x|μ，σ^2) = \frac{1}{\sqrt{2π}*σ} exp{- \frac{(x-μ)^2}{2σ^2}}$$
+2.多维高斯分布公式 $$ N(x|μ,Σ)=\frac{1}{(2π)^{\frac{D}{2}} |Σ|^{\frac{1}{2}}}exp{-\frac{1}{2}(x-μ)^T Σ^{-1}(x-μ) }$$
+3.多维高斯分布数据的相关性 由于Σ是实对称矩阵，可以将Σ分解成特征向量和的形式： $$Σ = \sum_{i=1}^D λ_i μ_i μ_i^T :$$ 矩阵的逆： $$Σ^{-1} = \sum_{i=1}^D \frac{1}{λ_i} μ_i μ_i^T$$ 以2维高斯分布为例："/>
+<meta name="twitter:site" content="@https://www.twitter.com/"/>
+
+
+    </head>
+<body>
+    <nav class="main-nav">
+	
+		<a href='https://mickeyding.github.io/'> <span class="arrow">←</span>Home</a>
+	
+
+	
+ 		<a href='https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%A4%E5%88%AB%E5%BC%8F/'>机器学习（一）贝叶斯判别式</a>
+  	
+ 		<a href='https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%9D%9E%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/'>机器学习（二）概率密度估计之非参数估计 </a>
+  	
+ 		<a href='https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86%E5%92%8C%E6%89%80%E7%94%A8%E7%AC%A6%E5%8F%B7/'>机器学习（二）概率密度分布之预备知识和所用符号 </a>
+  	
+
+	
+		<a class="cta" href="https://mickeyding.github.io/index.xml">Subscribe</a>
+	
+</nav>
+
+    <section id="wrapper">
+        
+        
+<article class="post">
+    <header>
+        <h1>机器学习（二）概率密度分布之预备知识和所用符号 </h1>
+        <h2 class="subtitle"></h2>
+        <h2 class="headline">
+        February 19, 2018
+        <br>
+        
+        
+            
+                <a href="https://mickeyding.github.io/tags/machine-learning">Machine Learning</a>
+            
+                <a href="https://mickeyding.github.io/tags/basic-knowledge-of-probability-density-distribution">basic knowledge of probability density distribution</a>
+            
+        
+        
+        </h2>
+    </header>
+    <section id="post-body">
+        
+
+<hr />
+
+<p>机器学习（二）所用到的符号如下:</p>
+
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>$L(\theta)$</td>
+<td>θ的可能性，参考机器学习（一）条件概率</td>
+</tr>
+
+<tr>
+<td>$E(\theta)$</td>
+<td>$\theta$的对数可能性(Log-likelihood)</td>
+</tr>
+
+<tr>
+<td>$\widehat{μ}$</td>
+<td>μ的估计量</td>
+</tr>
+
+<tr>
+<td>X</td>
+<td>随机变量X</td>
+</tr>
+
+<tr>
+<td>n</td>
+<td>样本个数n</td>
+</tr>
+
+<tr>
+<td>D</td>
+<td>样本的维度</td>
+</tr>
+
+<tr>
+<td>x</td>
+<td>随机变量X的样本x</td>
+</tr>
+
+<tr>
+<td>$x_i$</td>
+<td>样本x的i个样本点</td>
+</tr>
+
+<tr>
+<td>$x_{trai}$</td>
+<td>训练样本</td>
+</tr>
+
+<tr>
+<td>$x_{trai_i}$</td>
+<td>训练样本的第i个样本点</td>
+</tr>
+
+<tr>
+<td>$\widehat{x}$</td>
+<td>输入样本</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<p>高斯分布预备知识总结（可以先跳过，必要时查找）</p>
+
+<h4 id="1-一维高斯分布公式">1.一维高斯分布公式</h4>
+
+<p>$$N(x|μ，σ^2) = \frac{1}{\sqrt{2π}*σ} exp{- \frac{(x-μ)^2}{2σ^2}}$$</p>
+
+<h4 id="2-多维高斯分布公式">2.多维高斯分布公式</h4>
+
+<p>$$ N(x|μ,Σ)=\frac{1}{(2π)^{\frac{D}{2}} |Σ|^{\frac{1}{2}}}exp{-\frac{1}{2}(x-μ)^T Σ^{-1}(x-μ) }$$</p>
+
+<h4 id="3-多维高斯分布数据的相关性">3.多维高斯分布数据的相关性</h4>
+
+<p>由于Σ是实对称矩阵，可以将Σ分解成特征向量和的形式：
+$$Σ = \sum_{i=1}^D  λ_i μ_i μ_i^T :$$
+矩阵的逆：
+$$Σ^{-1} = \sum_{i=1}^D \frac{1}{λ_i} μ_i μ_i^T$$
+以2维高斯分布为例：</p>
+
+<p>$$μ =[ \ \begin{array}{c} μ_1\ μ_2\ \end{array} \ ]$$
+$$Σ =[ \ \begin{array}{cc} σ_1^2 &amp; \rho \\ \rho &amp; σ_2^2\ \end{array} \ ]$$</p>
+
+<p>其中，$\rho$表示了数据间的相关性，数值越大，相关性越高。下图中，随着$\rho$的增大，高斯模型在xy平面上的投影越尖。$\rho &gt; 0 $ ，为正相关；$\rho &lt; 0 $ ，为负相关。
+<div align=center>
+<img src="http://img.blog.csdn.net/20180220224716270?" width = "600" height = "200"  />
+$$图2 二维高斯模型在xy平面上投影(左：\rho=0；中：\rho=0.4；右：\rho=0.8)$$
+&gt;<a href="https://www.youtube.com/watch?v=YRS-IB3vCow">https://www.youtube.com/watch?v=YRS-IB3vCow</a> 了解更多多维高斯分布的性质</p>
+
+<hr />
+
+<p>目录:<br />
+<a href="http://blog.csdn.net/qq_26386707/article/details/79341626">1.机器学习（二）概率密度分布之参数估计</a><br />
+<a href="http://blog.csdn.net/qq_26386707/article/details/79341609">2.机器学习（二）概率密度分布之非参数估计</a><br />
+<a href="http://blog.csdn.net/qq_26386707/article/details/79341662">3.机器学习（二）非参数估计matlab例程</a></p>
+
+    </section>
+</article>
+
+<footer id="post-meta" class="clearfix">
+    <a href="https://twitter.com/Your%20Twitter%20account">
+    <img class="avatar" src="https://mickeyding.github.io/images/avatar.png">
+    <div>
+        <span class="dark">Chenjing Ding</span>
+        <span>I&#39;m an blogger.</span>
+    </div>
+    </a>
+    <section id="sharing">
+        <a class="twitter" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fmickeyding.github.io%2fpost%2f%25E6%259C%25BA%25E5%2599%25A8%25E5%25AD%25A6%25E4%25B9%25A0%25E4%25BA%258C%25E6%25A6%2582%25E7%258E%2587%25E5%25AF%2586%25E5%25BA%25A6%25E5%2588%2586%25E5%25B8%2583%25E4%25B9%258B%25E9%25A2%2584%25E5%25A4%2587%25E7%259F%25A5%25E8%25AF%2586%25E5%2592%258C%25E6%2589%2580%25E7%2594%25A8%25E7%25AC%25A6%25E5%258F%25B7%2f - %e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%ef%bc%88%e4%ba%8c%ef%bc%89%e6%a6%82%e7%8e%87%e5%af%86%e5%ba%a6%e5%88%86%e5%b8%83%e4%b9%8b%e9%a2%84%e5%a4%87%e7%9f%a5%e8%af%86%e5%92%8c%e6%89%80%e7%94%a8%e7%ac%a6%e5%8f%b7%20 by @Your%20Twitter%20account"><span class="icon-twitter"> tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+    </section>
+</footer>
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "spf13" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<ul id="post-list" class="archive readmore">
+    <h3>Read more</h3>
+
+    
+    
+    
+        <li>
+            <a href="https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%8C%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83%E4%B9%8B%E9%9D%9E%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/">机器学习（二）概率密度估计之非参数估计 <aside class="dates">Feb 19 2018</aside></a>
+        </li>
+    
+        <li>
+            <a href="https://mickeyding.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%80%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%A4%E5%88%AB%E5%BC%8F/">机器学习（一）贝叶斯判别式<aside class="dates">Feb 13 2018</aside></a>
+        </li>
+    
+</ul>
+
+
+
+        <footer>
+  <div>
+    <p>
+    &copy; 2017-18 Chenjing Ding.
+   
+    </p>
+  </div>
+  <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+ 
+</script>
+</footer>
+
+
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-XYSYXYSY-X']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script');
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
+        'http://www') + '.google-analytics.com/ga.js';
+    ga.setAttribute('async', 'true');
+    document.documentElement.firstChild.appendChild(ga);
+  })();
+
+</script>
+</body>
+</html>
+    </section>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://mickeyding.github.io/js/main.js"></script>
+<script src="https://mickeyding.github.io/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>

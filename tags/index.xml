@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Chenjing Blog</title>
+    <link>https://mickeyding.github.io/tags/</link>
+    <description>Recent content in Tags on Chenjing Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 19 Feb 2018 16:30:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://mickeyding.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Basic Knowledge of Probability Density Distribution</title>
+      <link>https://mickeyding.github.io/tags/basic-knowledge-of-probability-density-distribution/</link>
+      <pubDate>Mon, 19 Feb 2018 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/tags/basic-knowledge-of-probability-density-distribution/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bayes Discriminant Function</title>
+      <link>https://mickeyding.github.io/tags/bayes-discriminant-function/</link>
+      <pubDate>Tue, 13 Feb 2018 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/tags/bayes-discriminant-function/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Machine Learning</title>
+      <link>https://mickeyding.github.io/tags/machine-learning/</link>
+      <pubDate>Mon, 19 Feb 2018 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Non Parametric Estmation</title>
+      <link>https://mickeyding.github.io/tags/non-parametric-estmation/</link>
+      <pubDate>Mon, 19 Feb 2018 16:30:37 +0800</pubDate>
+      
+      <guid>https://mickeyding.github.io/tags/non-parametric-estmation/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
